@@ -1,0 +1,93 @@
+enter your password:
+        " * ": Used to erase all of character
+        " # ": same as enter to compare with default password
+    (if not enter character nut you use # . Systerm will be notify that not character-----              status: STATE_LOCK_INPUT
+    if you have be the character, and  use #. It is going to convert to next part to test password)
+                if the password is true, the screen will show "MAT KHAU DUNG". THen, buzzer and servo will be activated. The door is open , after 10 second, the open is close
+                else: the password is false, the screen will show "SAI MAT KHAU", and the buzzes and led is activated.
+        then, it is going to earase the screen.
+    use " * " to earase all of character.
+With the status: STATE_SLEEP:
+    if Backlight == 1: the screen will show "deep_sleeping"
+    else 
+            if Backlight == 0:
+                    show "Wake_up"
+                    Backlight =1
+    if != STATE_SLEEP and exceed waitting time:
+        status: STATE_SLEEP
+        input_key = 0 and erase all off character
+        display "deep_sleeping" on the screen
+    Switch(CurrentState):
+        case STATE_LOCK_INPUT:
+            display "NHAP MAT KHAU: "
+            if enter "A":
+                CurrentState: STATE_RFID_ADD_MENU
+                display "OPTION: B: MASTER
+                                C: MEMBER
+                                D: CLEAR"
+            display status of cards (give your card near RC522), then check status of card
+            if status == MI_OK:
+                compare care
+                if true:
+                    the door is open and led, buzzes is activated
+                else:
+                    display "THE KHONG HOP LE"
+        case STATE_RFID_ADD_MENU:
+            if enter "B":
+                CurrentState: STATE_ADD_MASTER
+                display "CHE DO THEM THE: MASTER: QUET THE"
+            if enter "C":
+                if Master_Card_Exists == 0:
+                    display "ERROR: HAY THEM THE MASTER TRUOC"
+                    buzzer and led will blink
+                else:
+                    CurrentState: STATE_ADD_MEMBER
+                    display "CHE DO THEM THE: MEMBER: QUET THE"
+            if enter "D":
+                if Master_Card_Exists == 1:
+                    CurrentState: STATE_DELETE_MEMBER
+                    display "QUET THE MASTER DE XAC NHAN"
+                else:
+                    display "ERROR: THE MASTER CHUA DUOC THEM"
+            if enter "*":
+                return to STATE_LOCK_INPUT
+
+        case STATE_ADD_MASTER:
+            if scan a card and it is the master card:
+                display "SUCCESS MASTER" and "DA THEM ID THE"
+                set Master_Card_Exists = 1
+            else:
+                display "ERROR: THE NAY KHONG HOP LE"
+                buzzer and led will blink
+            then return to STATE_LOCK_INPUT
+
+        case STATE_ADD_MEMBER:
+            if scan a card:
+                if it is added successfully:
+                    display "SUCCESS MEMBER"
+                else:
+                    display "MEMBER: ERROR THE DA TON TAI"
+            then return to STATE_LOCK_INPUT
+
+        case STATE_DELETE_MEMBER:
+            if scan the master card:
+                CurrentState: STATE_DELETE_WAIT
+                display "XAC NHAN OK! QUET THE DE XOA"
+            else:
+                display "ERROR: KHONG PHAI THE MASTER"
+
+        case STATE_DELETE_WAIT:
+            if press "*":
+                return to STATE_LOCK_INPUT
+            if scan a card:
+                if card is member and delete success:
+                    display "XOA ID MEMBER: OK"
+                else:
+                    display "DELETE ERROR" or "ID KHONG TON TAI"
+            then return to STATE_LOCK_INPUT
+
+        case STATE_SLEEP:
+            if press any key or scan a valid card:
+                wake up and return to STATE_LOCK_INPUT
+            else:
+                stay in sleep mode and display "deep_sleeping"
