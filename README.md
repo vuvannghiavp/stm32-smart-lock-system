@@ -6,7 +6,7 @@ The project focuses on embedded firmware development, peripheral integration, st
 
 ## Features
 
-* 🔐 **Password Authentication**
+ **Password Authentication**
 
   * Enter password using a matrix keypad.
   * `#` is used to confirm the password.
@@ -15,7 +15,7 @@ The project focuses on embedded firmware development, peripheral integration, st
   * Correct password unlocks the door.
   * Incorrect password triggers buzzer and LED feedback.
 
-* 🪪 **RFID Access Control**
+  **RFID Access Control**
 
   * RFID card detection using the **RC522** module.
   * Supports a **Master Card** and multiple **Member Cards**.
@@ -24,18 +24,18 @@ The project focuses on embedded firmware development, peripheral integration, st
   * Delete Member Cards.
   * Verify cards before granting access.
 
-* 🚪 **Servo Door Control**
+   **Servo Door Control**
 
   * Servo motor is used as the door-lock actuator.
   * The door automatically locks again after the configured unlock period.
 
-* 🔊 **User Feedback**
+  **User Feedback**
 
   * LCD displays system status and authentication results.
   * Buzzer provides success/error feedback.
   * LED indicates access and error states.
 
-* 😴 **Sleep Mode**
+  **Sleep Mode**
 
   * The system enters a low-activity sleep state after a period of inactivity.
   * Keypad input or a valid RFID card can wake the system.
@@ -188,16 +188,12 @@ This approach makes the firmware easier to extend because new authentication met
 
 * **C**
 * **STM32 HAL**
-* **CMSIS**
 * **STM32CubeMX**
 * **Keil MDK / ARM Compiler**
 * **GPIO**
 * **SPI**
-* **Timer / PWM**
-* **UART**
+* **Timer**
 * **Matrix Keypad Scanning**
-* **State Machine**
-* **Embedded Firmware Architecture**
 
 ## Project Structure
 
@@ -232,10 +228,6 @@ stm32-smart-lock-system/
 ```
 
 The repository separates the STM32 generated project files, HAL/CMSIS drivers, and application-level peripheral libraries into dedicated directories.
-
-## Key Embedded Concepts
-
-This project was developed to practice and demonstrate several embedded-system concepts:
 
 ### 1. Peripheral Integration
 
@@ -274,7 +266,6 @@ RC522/
 SERVO/
 ```
 
-This allows individual modules to be reused or replaced without significantly modifying the application layer.
 
 ### 4. Access Control
 
@@ -330,42 +321,20 @@ The implementation also checks whether a Master Card has already been registered
 * STM32CubeMX
 * Keil MDK or compatible ARM toolchain
 
-### Build
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/vuvannghiavp/stm32-smart-lock-system.git
-```
-
-2. Open the STM32 project using the supported IDE/toolchain.
-
-3. Open the CubeMX configuration:
-
-```text
-ex.ioc
-```
-
-4. Verify the GPIO, SPI, timer and other peripheral configurations.
-
-5. Build the project.
-
-6. Flash the generated firmware to the STM32 board using ST-Link.
-
 ## Future Improvements
 
 Possible extensions for the system include:
 
-* 🔑 Password storage in internal Flash
-* 👤 More robust user/card management
-* 📋 Access-event logging
-* 🔒 Lockout after multiple failed authentication attempts
-* 🔋 Low-power optimization
-* 📱 Bluetooth/BLE remote access
-* 📡 Wi-Fi connectivity
-* ☁️ Cloud-based access logging
-* 🔄 Firmware OTA update
-* 🛡️ Encrypted authentication and secure credential storage
+*  Password storage in internal Flash
+*  More robust user/card management
+*  Access-event logging
+*  Lockout after multiple failed authentication attempts
+*  Low-power optimization
+*  Bluetooth/BLE remote access
+*  Wi-Fi connectivity
+*  Cloud-based access logging
+*  Firmware OTA update
+*  Encrypted authentication and secure credential storage
 
 ## Learning Objectives
 
@@ -383,15 +352,9 @@ This project was developed as a practical embedded-system project to improve ski
 * Modular firmware architecture
 * Hardware/software integration
 
-## Author
-
-**Vu Van Nghia**
-
-Embedded Systems / Firmware Developer
-
 GitHub:
 https://github.com/vuvannghiavp
 
 ---
+Youtube:
 
-⭐ If you find this project useful, feel free to explore the source code and experiment with the firmware.
